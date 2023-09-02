@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import GlobalStyle from "./theme/GlobalStyle";
+import { ThemeProvider } from "styled-components";
+import theme from "./theme";
+import Sidebar from "./components/Sidebar";
+import MainSection from "./components/MainSection";
+import WrapperContainer from "./components/WrapperContainer/styled";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    <WrapperContainer>
+      <Sidebar />
+      <MainSection />
+    </WrapperContainer>
+  </ThemeProvider>
+);
 
 export default App;
