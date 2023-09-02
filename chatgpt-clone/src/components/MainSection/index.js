@@ -8,8 +8,36 @@ import {
   StyledMainPromptContainer,
   StyledMainPromptInfo,
 } from "./styled";
+import axios from "axios";
 
 const MainSection = () => {
+  const getMessages = async () => {
+    const options = {
+      body: {
+        message: "Hello ! How are you?",
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/completions",
+        {
+          options,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.data;
+      console.log(data);
+    } catch (error) {
+      console.error("Błąd podczas przetwarzania zapytania:", error);
+    }
+  };
+
   return (
     <StyledMainSection>
       <StyledMainHeader>KamilGPT</StyledMainHeader>
@@ -19,7 +47,9 @@ const MainSection = () => {
       <StyledMainPromptSection>
         <StyledMainPromptContainer>
           <StyledMainPromptInput />
-          <StyledMainPromptSubmit>➢</StyledMainPromptSubmit>
+          <StyledMainPromptSubmit onClick={getMessages}>
+            ➢
+          </StyledMainPromptSubmit>
         </StyledMainPromptContainer>
         <StyledMainPromptInfo>
           Chat GPT Mar 25 Version. Free Research Preview Our Goal is to make AI
