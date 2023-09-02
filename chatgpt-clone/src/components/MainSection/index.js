@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StyledMainFeed,
   StyledMainHeader,
@@ -11,18 +12,17 @@ import {
 import axios from "axios";
 
 const MainSection = () => {
+  const [value, setValue] = useState("");
+  const [message, setMessage] = useState("");
+
   const getMessages = async () => {
-    const options = {
-      body: {
-        message: "Hello ! How are you?",
-      },
-    };
+    console.log("Wartość value:", value);
 
     try {
       const response = await axios.post(
         "http://localhost:8000/completions",
         {
-          options,
+          message: value,
         },
         {
           headers: {
@@ -31,8 +31,9 @@ const MainSection = () => {
         }
       );
 
-      const data = await response.data;
-      console.log(data);
+      const data = response.data;
+
+      setMessage(data.choices[0].message);
     } catch (error) {
       console.error("Błąd podczas przetwarzania zapytania:", error);
     }
@@ -42,11 +43,24 @@ const MainSection = () => {
     <StyledMainSection>
       <StyledMainHeader>KamilGPT</StyledMainHeader>
 
-      <StyledMainFeed></StyledMainFeed>
+      <StyledMainFeed>
+        {message && (
+          <div>
+            <div>Role: {message.role}</div>
+            <div>Content: {message.content}</div>
+          </div>
+        )}
+      </StyledMainFeed>
 
       <StyledMainPromptSection>
         <StyledMainPromptContainer>
-          <StyledMainPromptInput />
+          <StyledMainPromptInput
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+              console.log(value);
+            }}
+          />
           <StyledMainPromptSubmit onClick={getMessages}>
             ➢
           </StyledMainPromptSubmit>

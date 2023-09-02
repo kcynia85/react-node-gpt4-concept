@@ -24,10 +24,12 @@ const axiosConfig = axios.create({
 });
 
 app.post("/completions", async (req, res) => {
+  console.log(`#########Co mi zwraca z body ########## ${req.body.message}`);
+
   const options = {
     model: "gpt-3.5-turbo",
-    messages: [{ role: "user", content: "how are you" }],
-    max_tokens: 300,
+    messages: [{ role: "user", content: req.body.message }],
+    max_tokens: 100,
   };
 
   try {
