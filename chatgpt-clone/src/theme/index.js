@@ -1,6 +1,6 @@
 const theme = {
   colors: {
-    primaryColor: "hsla(214, 27%, 10%, 1)",
+    primaryColor: "hsla(215, 27%, 10%, 1)",
     secondaryColor: "hsla(30, 55%, 56%, 1)",
   },
   fontSizes: {
